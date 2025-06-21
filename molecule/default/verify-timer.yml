@@ -1,0 +1,31 @@
+# SPDX-License-Identifier: 0BSD
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/tasks
+# code: language=ansible
+---
+- name: Get systemd timer status  # noqa args[module] noqa syntax-check[specific]
+  ansible.builtin.systemd_service:
+    name: "{{ item.name }}.timer"
+  register: timer_status
+
+- name: Get systemd service status
+  ansible.builtin.systemd_service:
+    name: "{{ item.name }}.service"
+  register: service_status
+
+- name: Check systemd timer
+  ansible.builtin.assert:
+    that:
+      - timer_status.changed == false
+      - timer_status.failed == false
+      - timer_status.status.ActiveState == 'active'
+      - timer_status.status.UnitFileState == 'enabled'
+    msg: "Systemd timer {{ item.name }} is not present or not started"
+
+- name: Check systemd timer' service
+  ansible.builtin.assert:
+    that:
+      - service_status.changed == false
+      - service_status.failed == false
+      - service_status.status.ActiveState == 'inactive'
+      - service_status.status.UnitFileState == 'static'
+    msg: "Systemd timer's service {{ item.name }} is not present or not started"

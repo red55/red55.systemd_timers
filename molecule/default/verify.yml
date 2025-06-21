@@ -1,0 +1,16 @@
+# code: language=ansible
+# SPDX-License-Identifier: 0BSD
+---
+
+- name: Verify systemd timers
+  hosts: all
+  become: true
+  check_mode: true
+  vars_files:
+    - vars.yml
+  tasks:
+    - name: Include checks
+      loop: "{{ red55_systemd_timers }}"
+      loop_control:
+        label: "{{ item.name }}"
+      ansible.builtin.include_tasks: verify-timer.yml

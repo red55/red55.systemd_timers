@@ -1,0 +1,23 @@
+---
+driver:
+  name: docker
+dependency:
+  enabled: true
+  name: galaxy
+  options:
+    role-file: requirements.yml
+
+platforms:
+  - name: instance
+    image: docker.io/red55/ubuntu-systemd-python:latest
+    dockerfile: Dockerfile.j2
+    command: "" # required to be empty string, as docker driver will substitute the command with 'sleep 10000'
+    cgroupns_mode: host
+    privileged: true
+    pre_build_image: false
+    tmpfs:
+      - /tmp
+      - /run
+      - /run/lock
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup

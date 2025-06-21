@@ -1,0 +1,50 @@
+{{ ansible_managed | comment }}
+[Unit]
+Description={{ item['description'] if item['description'] is defined else item['name'] ~ ' Timer'  }}
+
+[Timer]
+{% if item['timer']['accuracy_sec'] is defined %}
+AccuracySec={{ item['timer']['accuracy_sec'] }}
+{% endif %}
+{% if item['timer']['active_sec'] is defined %}
+OnActiveSec={{ item['timer']['active_sec'] }}
+{% endif %}
+{% if item['timer']['randomized_delay_sec'] is defined %}
+RandomizeDelaySec={{ item['timer']['randomized_delay_sec'] }}
+{% endif %}
+{% if item['timer']['fixed_random_delay'] is defined %}
+FixedRandomDelay={{ item['timer']['fixed_random_delay'] | bool | lower }}
+{% endif %}
+{% if item['timer']['reboot_sec'] is defined %}
+{% endif %}
+{% if item['timer']['startup_sec'] is defined %}
+OnStartupSec={{ item['timer']['startup_sec'] }}
+{% endif %}
+{% if item['timer']['unit_active_sec'] is defined %}
+OnUnitActiveSec={{ item['timer']['unit_active_sec'] }}
+{% endif %}
+{% if item['timer']['unit_inactive_sec'] is defined %}
+OnUnitInactiveSec={{ item['timer']['unit_inactive_sec'] }}
+{% endif %}
+{% if item['timer']['calendar'] is defined %}
+OnCalendar={{ item['timer']['calendar'] }}
+{% endif %}
+{% if item['timer']['persistent'] is defined %}
+Persistent={{ item['timer']['persistent'] | bool | lower }}
+{% endif %}
+Unit={{ item['name'] }}.service
+{% if item['timer']['wake_system'] is defined %}
+WakeSystem={{ item['timer']['wake_system'] | bool | lower }}
+{% endif %}
+{% if item['timer']['remain_after_elapse'] is defined %}
+RemainAfterElapse={{ item['timer']['remain_after_elapse'] | bool | lower }}
+{% endif %}
+{% if item['timer']['clock_change'] is defined %}
+OnClockChange={{ item['timer']['clock_change'] | bool | lower }}
+{% endif %}
+{% if item['timer']['tz_change'] is defined %}
+OnTimezoneChange={{ item['timer']['tz_change'] | bool | lower }}
+{% endif %}
+
+[Install]
+WantedBy=timers.target

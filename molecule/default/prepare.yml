@@ -1,0 +1,16 @@
+# code: language=ansible
+# SPDX-License-Identifier: 0BSD
+---
+
+- name: Prepare the system for testing
+  hosts: all
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Wait for systemd to be ready # noqa command-instead-of-module # noqa no-changed-when
+      ansible.builtin.command:
+        cmd: systemctl is-system-running
+      register: systemd_status
+      until: systemd_status.stdout == "running"
+      retries: 10
+      delay: 2

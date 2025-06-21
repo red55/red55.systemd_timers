@@ -1,0 +1,21 @@
+---
+red55_systemd_timers:
+  - name: "red55.test.1"
+    description: "Test Timer"
+    exec: "/bin/echo 'Hello, World!'"
+    user: root
+    group: root
+    runtime_dir: "red55.test.1"
+    working_dir: "/tmp"
+    env:
+      TEST_ENV_VAR: "1"
+    timer:
+      accuracy_sec: "1min"
+      persistent: true
+      active_sec: "1min"
+      boot_sec: "1min"
+      startup_sec: "1min"
+      randomized_delay_sec: "1min"
+      unit_active_sec: "1min"
+      unit_inactive_sec: "1min"
+      calendar: "Mon *-*-* 00:00:00"

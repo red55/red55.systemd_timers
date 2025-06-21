@@ -1,0 +1,24 @@
+{{ ansible_managed | comment }}
+[Unit]
+Description={{ item['name'] }} Service
+
+[Service]
+Type=one-shot
+ExecStart={{ item['exec'] }}
+TimeoutStartSec=0
+Environment="CRON=true"
+{% for e in item['env'] %}
+Environment="{{ e }}={{ item['env'][e] }}"
+{% endfor %}
+{% if item['user'] | default("", true) | length > 0 %}
+User={{ item['user'] }}
+{% endif %}
+{% if item['group'] | default("", true) | length > 0 %}
+Group={{ item['group'] }}
+{% endif %}
+{% if item['working_dir'] | default("", true) | length > 0 %}
+WorkingDirectory={{ item['working_dir'] }}
+{% endif %}
+{% if item['runtime_dir'] | default("", true) | length > 0 %}
+RuntimeDirectory={{ item['runtime_dir'] }}
+{% endif %}

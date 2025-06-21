@@ -1,0 +1,16 @@
+# code: language=ansible
+# SPDX-License-Identifier: 0BSD
+---
+
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Enable systemd timers
+  loop: "{{ red55_systemd_timers }}"
+  loop_control:
+    label: "{{ item.name }}"
+  ansible.builtin.systemd:
+    name: "{{ item.name }}.timer"
+    enabled: true
+    state: started

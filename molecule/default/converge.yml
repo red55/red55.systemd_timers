@@ -1,0 +1,10 @@
+# code: language=ansible
+# SPDX-License-Identifier: 0BSD
+---
+- name: Converge
+  hosts: all
+  become: true
+  vars_files:
+    - vars.yml
+  roles:
+    - role: red55.systemd_timers
