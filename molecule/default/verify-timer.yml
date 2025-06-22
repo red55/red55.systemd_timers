@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: 0BSD
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/tasks
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/ansible-lint/refs/heads/main/src/ansiblelint/schemas/tasks.json
 # code: language=ansible
 ---
 - name: Get systemd timer status  # noqa args[module] noqa syntax-check[specific]
